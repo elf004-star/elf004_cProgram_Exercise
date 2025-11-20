@@ -1,0 +1,11 @@
+# Ignore files without extension
+*
+!*/
+!*.*
+!.*
+
+# Ignore .exe files
+*.exe
+
+# Ignore files containing 'test'
+*test*
