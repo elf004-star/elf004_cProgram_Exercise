@@ -11,5 +11,5 @@
 *test*
 
 # Ignore .Exer
-# *.Exer
-# *.exer
+*.Exer
+*.exer
