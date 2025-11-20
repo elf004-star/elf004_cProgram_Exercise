@@ -9,3 +9,7 @@
 
 # Ignore files containing 'test'
 *test*
+
+# Ignore .Exer
+# *.Exer
+# *.exer
