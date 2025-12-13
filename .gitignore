@@ -13,3 +13,7 @@
 # Ignore .Exer
 *.Exer
 *.exer
+
+# Ignore .clangd for C and C++ in neovim
+.clangd
+
