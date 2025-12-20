@@ -6,6 +6,7 @@
 
 # Ignore .exe files
 *.exe
+*.out
 
 # Ignore files containing 'test'
 *test*
