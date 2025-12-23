@@ -3,16 +3,16 @@
 /* count characters in input; 1st version */
 
 int main() {
-  long nc;
-  int c;
+    long nc;
+    int c;
 
-  nc = 0;
-  c = 0;
+    nc = 0;
+    c = 0;
 
-  while ((c = getchar()) != EOF)
-    ++nc;
+    while ((c = getchar()) != EOF)
+        ++nc;
 
-  printf("%ld\n", nc);
+    printf("%ld\n", nc);
 
-  return 0;
+    return 0;
 }

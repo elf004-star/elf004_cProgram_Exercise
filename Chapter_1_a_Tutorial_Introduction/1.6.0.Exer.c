@@ -3,12 +3,12 @@
 /* copy input to output; 1st version */
 
 int main() {
-  int c;
-  printf("EOF=%d\n", EOF);
+    int c;
+    printf("EOF=%d\n", EOF);
 
-  while ((c = getchar()) != EOF) {
-    putchar(c);
-  }
+    while ((c = getchar()) != EOF) {
+        putchar(c);
+    }
 
-  return 0;
+    return 0;
 }

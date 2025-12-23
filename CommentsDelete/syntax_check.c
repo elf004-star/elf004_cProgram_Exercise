@@ -38,7 +38,7 @@ int peek() {
 
 int main() {
     int c;
-    
+
     // 状态标志
     int in_comment_block = 0; // 是否在 /* ... */ 中
     int in_comment_line = 0;  // 是否在 // ... 中
@@ -46,7 +46,7 @@ int main() {
     int in_char = 0;          // 是否在 ' ... ' 中
     int escape = 0;           // 上一个字符是否是转义符 \
 
-    int line = 1; // 行号计数
+    int line = 1;             // 行号计数
 
     printf("Starting syntax check (press Ctrl+Z then Enter on Windows or Ctrl+D on Linux to finish input):\n");
 
@@ -55,7 +55,7 @@ int main() {
             line++;
         }
 
-        // 1. 处理转义字符 \ 
+        // 1. 处理转义字符 \
         // 如果处于字符串或字符常量中，\ 会转义下一个字符（包括引号）
         if (escape) {
             escape = 0;
@@ -104,7 +104,7 @@ int main() {
         }
 
         // 6. 普通代码区域的处理
-        
+
         // 检查注释开始
         if (c == '/') {
             int next = getchar();
@@ -138,9 +138,12 @@ int main() {
             } else {
                 int expected = peek();
                 int match = 0;
-                if (expected == '(' && c == ')') match = 1;
-                if (expected == '[' && c == ']') match = 1;
-                if (expected == '{' && c == '}') match = 1;
+                if (expected == '(' && c == ')')
+                    match = 1;
+                if (expected == '[' && c == ']')
+                    match = 1;
+                if (expected == '{' && c == '}')
+                    match = 1;
 
                 if (match) {
                     pop();
@@ -157,11 +160,14 @@ int main() {
         int left = pop();
         printf("Error: Unmatched opening '%c' (remaining in stack)\n", left);
     }
-    
+
     // 检查是否有未闭合的注释或引用
-    if (in_comment_block) printf("Error: Block comment /* not closed\n");
-    if (in_string) printf("Error: String \"... not closed\n");
-    if (in_char) printf("Error: Char constant '... not closed\n");
+    if (in_comment_block)
+        printf("Error: Block comment /* not closed\n");
+    if (in_string)
+        printf("Error: String \"... not closed\n");
+    if (in_char)
+        printf("Error: Char constant '... not closed\n");
 
     return 0;
 }

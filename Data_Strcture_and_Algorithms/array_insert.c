@@ -9,7 +9,7 @@ int main(void) {
     int pos = 2;
 
     for (int i = length; i > pos; i--) {
-        arr[i] = arr[i-1];
+        arr[i] = arr[i - 1];
     }
 
     arr[pos] = element;

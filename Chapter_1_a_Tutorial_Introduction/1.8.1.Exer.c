@@ -3,12 +3,12 @@
 /* count characters in input;  2version */
 
 int main() {
-  double nc;
+    double nc;
 
-  for (nc = 0; getchar() != EOF; ++nc)
-    ;
+    for (nc = 0; getchar() != EOF; ++nc)
+        ;
 
-  printf("%.0f\n", nc);
+    printf("%.0f\n", nc);
 
-  return 0;
+    return 0;
 }

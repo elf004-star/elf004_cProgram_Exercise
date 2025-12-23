@@ -4,7 +4,7 @@
 
 int main() {
 
-  printf("int=%d\nchar=%c\n", EOF, EOF);
+    printf("int=%d\nchar=%c\n", EOF, EOF);
 
-  return 0;
+    return 0;
 }
