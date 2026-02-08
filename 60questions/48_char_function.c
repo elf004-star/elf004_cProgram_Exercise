@@ -3,11 +3,11 @@
 int cuntchar(char mychar[]);
 
 int main() {
-    char testchar[] = "abcdABCD";
+    char testchar[] = "abcdABCD123";
 
     printf("origin testchar: %s\n", testchar);
 
-    printf("%d\n", cuntchar(testchar));
+    printf("the number of testchar: %d\n", cuntchar(testchar));
 
     printf("transformer testchar: %s\n", testchar);
 
@@ -19,9 +19,11 @@ int cuntchar(char mychar[]) {
     int count = 0;
 
     while (*p != '\0') {
-        count++;
         if (*p >= 'a' && *p <= 'z') {
+            count++;
             *p = *p - ('a' - 'A');
+        } else if (*p >= 'A' && *p <= 'Z') {
+            count++;
         }
         p++;
     }
