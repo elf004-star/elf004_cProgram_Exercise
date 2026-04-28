@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdio.h>
 /* quick square */
 float Q_rsqrt(float number);
 
