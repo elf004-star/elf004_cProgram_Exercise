@@ -16,4 +16,4 @@
 *.exer
 
 # Ignore .clangd for C and C++ in neovim
-
+target/
