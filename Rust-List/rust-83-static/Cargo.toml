@@ -1,0 +1,6 @@
+[package]
+name = "rust-83-static"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
