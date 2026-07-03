@@ -1,0 +1,6 @@
+[package]
+name = "rust-143-iterators"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
