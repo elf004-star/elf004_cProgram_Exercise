@@ -17,3 +17,6 @@
 
 # Ignore .clangd for C and C++ in neovim
 target/
+
+# macOS system files
+.DS_Store
