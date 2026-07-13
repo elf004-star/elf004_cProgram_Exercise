@@ -5,7 +5,16 @@
 
 \documentclass[letterpaper,11pt]{article}
 
+\PassOptionsToPackage{quiet}{xeCJK}
 \usepackage[UTF8]{ctex}
+
+% 字体设置：优先苹方，否则回退到 SongtiSCLight
+\IfFontExistsTF{苹方-简}{%
+    \setCJKmainfont{苹方-简}[BoldFont=苹方-简 中黑体, ItalicFont=苹方-简]%
+}{%
+    \setCJKmainfont{SongtiSCLight}%
+}
+
 \usepackage{latexsym}
 \usepackage[empty]{fullpage}
 \usepackage{titlesec}
@@ -19,7 +28,7 @@
 \usepackage{graphicx}
 \ifx\pdfglyphtounicode\undefined
 \else
-  \input{glyphtounicode}
+\input{glyphtounicode}
 \fi
 
 \pagestyle{fancy}
@@ -41,42 +50,49 @@
 
 % 这里保留并修正了分隔横线命令 \titlerule
 \titleformat{\section}{
-  \vspace{2pt}\raggedright\large\bfseries
+    \vspace{2pt}\raggedright\large\bfseries
 }{}{0em}{}[\color{black}\titlerule \vspace{3pt}]
 
 \ifx\pdfgentounicode\undefined\else\pdfgentounicode=1\fi
 
 \newcommand{\resumeItem}[1]{
-  \item{
-    {#1 \vspace{-2pt}}
-  }
+\item{
+        {#1 \vspace{-2pt}}
+    }
 }
 
 \newcommand{\resumeSubheading}[4]{
-  \vspace{-2pt}\item
+    \vspace{-2pt}
+\item
     \begin{tabular*}{0.95\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & \textbf{#2} \\
-      \textit{#3} & \textit{#4} \\
+        \textbf{#1} & \textbf{#2} \\
+        \textit{#3} & \textit{#4} \\
     \end{tabular*}\vspace{-7pt}
 }
 
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
-\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+\newcommand{\resumeSubHeadingListStart}{
+\begin{itemize}[leftmargin=0.15in, label={}]}
+        \newcommand{\resumeSubHeadingListEnd}{
+\end{itemize}}
+\newcommand{\resumeItemListStart}{
+\begin{itemize}}
+        \newcommand{\resumeItemListEnd}{
+\end{itemize}\vspace{-5pt}}
 
 \begin{document}
 
 %----------HEADING----------
 % 使用 [c] 确保姓名信息与右侧照片在竖向上完美居中对齐
 \begin{minipage}[c]{0.72\textwidth}
-	\textbf{\Huge 陈春钱} \\[6pt]
-	17729839653 $|$ \href{mailto:1873475824@qq.com}{\underline{1873475824@qq.com}} $|$ 四川广安 $|$ 男
+    \textbf{\Huge 陈春钱} \\[6pt]
+    17729839653 $|$
+    \href{mailto:1873475824@qq.com}{\underline{1873475824@qq.com}}
+    $|$ 四川广安 $|$ 男 $|$ 1996年10月
 \end{minipage}%
 \hfill
 \begin{minipage}[c]{0.23\textwidth}
-	\raggedleft
-	\includegraphics[width=1.20in,keepaspectratio]{photo.png}
+    \raggedleft
+    \includegraphics[width=1.20in,keepaspectratio]{photo.png}
 \end{minipage}
 
 %-----------EDUCATION-----------
@@ -117,19 +133,21 @@
 %-----------SKILLS-----------
 \section{专业技能}
 \begin{itemize}[leftmargin=0.15in, label={}]
-	{\item{
-	      \textbf{编程语言}{: C语言, Python, Rust — 可独立开发数值计算与数据处理程序} \\
-	      \textbf{英语水平}{: 大学英语六级（CET-6），可流畅阅读专业文献并撰写英文学术论文} \\
-	      \textbf{教学特长}{: 物理, 数学, 计算机科学 — 擅长启发式与探究式教学法}
-	      }}
+        {
+        \item{
+                \textbf{编程语言}{: C语言, Python, Rust — 可独立开发数值计算与数据处理程序} \\
+                \textbf{英语水平}{: 大学英语六级（CET-6），可流畅阅读专业文献并撰写英文学术论文} \\
+                \textbf{教学特长}{: 物理, 数学, 计算机科学 — 擅长启发式与探究式教学法}
+        }}
 \end{itemize}
 
 %-----------SELF-EVALUATION-----------
 \section{自我评价}
 \begin{itemize}[leftmargin=0.15in, label={}]
-	{\item{
-	      富有耐心，擅长启发式教学，善于将物理、数学与计算机知识融会贯通。注重结合AI等前沿科技（如小龙虾，deepseek）与生活案例设计教学场景，激发学生学习兴趣与探索精神。爱好乒乓球，性格积极乐观。
-	      }}
+        {
+        \item{
+                富有耐心，擅长启发式教学，善于将物理、数学与计算机知识融会贯通。注重结合AI等前沿科技（如小龙虾，deepseek）与生活案例设计教学场景，激发学生学习兴趣与探索精神。爱好乒乓球，性格积极乐观。
+        }}
 \end{itemize}
 
 \end{document}
