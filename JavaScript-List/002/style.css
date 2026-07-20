@@ -18,3 +18,14 @@ h1 {
     color: transparent;
     display: inline-block;
 }
+
+.header {
+    display: inline-block;
+    text-align: center;
+}
+
+#myBtn {
+    display: block;
+    width: fit-content;
+    margin: 1rem auto 0;
+}
