@@ -20,6 +20,7 @@ console.log("加分后：", adjusted);
 
 // 3. 找出最高分（reduce，这里简单演示）
 let maxScore = students.reduce((max, s) => s.score > max ? s.score : max, 0);
+// 详细写法如下（等效）：
 // let maxScore = students.reduce((max, s) => {
 //   if (s.score > max) {
 //     return s.score;
