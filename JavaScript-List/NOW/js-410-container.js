@@ -21,7 +21,7 @@ async function showUserOnPage() {
     container.innerHTML = "加载失败，请刷新重试";
     console.log(error);
   }
-
-  // 点击按钮调用
-  document.querySelector('#loadBtn').addEventListener('click', showUserOnPage);
 }
+
+// 点击按钮调用（绑定放在函数外面，只绑一次）
+document.querySelector('#loadBtn').addEventListener('click', showUserOnPage);
