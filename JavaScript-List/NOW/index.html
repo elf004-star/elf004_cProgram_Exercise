@@ -1,11 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>JavaScript 练习</title>
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .weather-app {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        #getWeatherBtn {
+            padding: 10px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background: #4a90d9;
+            color: white;
+        }
+        #getWeatherBtn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        #statusText {
+            color: #666;
+        }
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <div class="header">
@@ -13,6 +38,14 @@
         <button id="myBtn">点我</button>
         <p id="displayText">旧的内容</p>
     </div>
-    <script src="js-34-Promise.js"></script>
+
+    <!-- js-40 天气小应用（点击按钮获取成都天气） -->
+    <div class="weather-app">
+        <button id="getWeatherBtn">获取天气</button>
+        <p id="statusText">点击按钮获取成都的天气</p>
+        <div id="resultDiv"></div>
+    </div>
+
+    <script src="js-38-fetch.js"></script>
 </body>
 </html>
