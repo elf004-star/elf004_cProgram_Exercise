@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五子棋</title>
+    <link rel="shortcut icon" href="#">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #f5e6c8;   /* 木色 */
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 { margin: 0 0 4px; color: #5a3a1b; }
+        .status {
+            font-size: 1.2rem;
+            margin: 8px 0 16px;
+            color: #4a2f12;
+            min-height: 1.6em;
+        }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(15, 34px);
+            grid-template-rows: repeat(15, 34px);
+            background: #e8c98a;
+            border: 4px solid #8a5a2b;
+            box-shadow: 0 6px 16px rgba(0,0,0,.3);
+            position: relative;
+        }
+        .cell {
+            width: 34px;
+            height: 34px;
+            position: relative;
+            cursor: pointer;
+        }
+        /* 棋盘交叉线 */
+        .cell::before, .cell::after {
+            content: '';
+            position: absolute;
+            background: #8a5a2b;
+            opacity: .8;
+        }
+        .cell::before { width: 100%; height: 1px; top: 50%; }
+        .cell::after  { width: 1px; height: 100%; left: 50%; }
+        /* 棋子 */
+        .cell .stone {
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 2px 2px 4px rgba(0,0,0,.45);
+        }
+        .cell .stone.black { background: radial-gradient(circle at 35% 35%, #666, #000); }
+        .cell .stone.white { background: radial-gradient(circle at 35% 35%, #fff, #ccc); }
+        /* 最后一手标记 */
+        .cell .stone.last { outline: 3px solid #ff3b30; outline-offset: -1px; }
+        /* 悬停预览 */
+        .cell:hover::not(.occupied) .preview { display: block; }
+        .preview {
+            display: none;
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            opacity: .4;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .preview.black { background: #333; }
+        .preview.white { background: #fff; }
+        .controls { margin-top: 18px; display: flex; gap: 12px; }
+        .controls button {
+            font-size: 1rem;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #8a5a2b;
+            color: #fff;
+            cursor: pointer;
+        }
+        .controls button:hover { background: #6e4520; }
+        .controls button:disabled { background: #bbb; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <h1>五子棋</h1>
+    <div class="status" id="status">黑方执子，点击落子</div>
+    <div class="board" id="board"></div>
+    <div class="controls">
+        <button id="undoBtn">悔棋</button>
+        <button id="restartBtn">重新开始</button>
+    </div>
+
+    <script>
+        const SIZE = 15;              // 棋盘大小 15x15
+        const BLACK = 'black';
+        const WHITE = 'white';
+
+        const boardEl = document.getElementById('board');
+        const statusEl = document.getElementById('status');
+        const undoBtn = document.getElementById('undoBtn');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // grid[row][col]：null | BLACK | WHITE —— 用二维数组记录棋盘状态
+        let grid = [];
+        // 落子历史：保存每一步，用于悔棋和最后一手标记
+        let history = [];
+        let currentPlayer = BLACK;
+        let gameOver = false;
+
+        function initBoard() {
+            boardEl.innerHTML = '';
+            grid = Array.from({ length: SIZE }, () => Array(SIZE).fill(null));
+            history = [];
+            currentPlayer = BLACK;
+            gameOver = false;
+
+            for (let row = 0; row < SIZE; row++) {
+                for (let col = 0; col < SIZE; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+
+                    // 悬停预览（提示当前轮到哪方）
+                    const preview = document.createElement('div');
+                    preview.className = 'preview ' + currentPlayer;
+                    cell.appendChild(preview);
+
+                    cell.addEventListener('click', () => handleClick(row, col, cell));
+                    boardEl.appendChild(cell);
+                }
+            }
+            updateStatus();
+        }
+
+        function handleClick(row, col, cell) {
+            if (gameOver) return;
+            if (grid[row][col] !== null) return;   // 该位置已有棋子
+
+            placeStone(row, col, cell, currentPlayer);
+            history.push({ row, col });            // 记录这一步
+
+            if (checkWin(row, col, currentPlayer)) {
+                gameOver = true;
+                statusEl.textContent = (currentPlayer === BLACK ? '黑方' : '白方') + ' 获胜！🎉';
+            } else if (history.length === SIZE * SIZE) {
+                gameOver = true;
+                statusEl.textContent = '平局';
+            } else {
+                currentPlayer = currentPlayer === BLACK ? WHITE : BLACK;  // 换手
+                updateStatus();
+            }
+            updateLastMark();
+        }
+
+        function placeStone(row, col, cell, player) {
+            grid[row][col] = player;
+            const stone = document.createElement('div');
+            stone.className = 'stone ' + player;
+            cell.appendChild(stone);
+            // 清掉该格子的悬停预览
+            const preview = cell.querySelector('.preview');
+            if (preview) preview.remove();
+        }
+
+        // 撤销上一手
+        function undo() {
+            if (gameOver) {
+                // 游戏结束后悔棋：允许继续下，但只去掉最后一手
+                gameOver = false;
+            }
+            if (history.length === 0) return;
+
+            const last = history.pop();
+            grid[last.row][last.col] = null;
+
+            const cells = boardEl.children;
+            const cell = cells[last.row * SIZE + last.col];
+            const stone = cell.querySelector('.stone');
+            if (stone) stone.remove();
+
+            // 重新加回预览
+            const preview = document.createElement('div');
+            preview.className = 'preview ' + currentPlayer;
+            cell.appendChild(preview);
+
+            // 悔棋后轮到上一步落子的一方
+            currentPlayer = currentPlayer === BLACK ? WHITE : BLACK;
+            updateStatus();
+            updateLastMark();
+        }
+
+        // 标记最后一手（红圈）
+        function updateLastMark() {
+            boardEl.querySelectorAll('.stone.last').forEach(s => s.classList.remove('last'));
+            if (history.length > 0) {
+                const last = history[history.length - 1];
+                const cells = boardEl.children;
+                const stone = cells[last.row * SIZE + last.col].querySelector('.stone');
+                if (stone) stone.classList.add('last');
+            }
+        }
+
+        // 判断 (row,col) 落子的 player 是否连成五子
+        function checkWin(row, col, player) {
+            const dirs = [
+                [0, 1],   // 横向 →
+                [1, 0],   // 竖向 ↓
+                [1, 1],   // 斜下 ↘
+                [1, -1]   // 斜上 ↗
+            ];
+            for (const [dr, dc] of dirs) {
+                let count = 1;
+                // 往正方向数
+                for (let i = 1; i < 5; i++) {
+                    const r = row + dr * i, c = col + dc * i;
+                    if (r < 0 || r >= SIZE || c < 0 || c >= SIZE || grid[r][c] !== player) break;
+                    count++;
+                }
+                // 往反方向数
+                for (let i = 1; i < 5; i++) {
+                    const r = row - dr * i, c = col - dc * i;
+                    if (r < 0 || r >= SIZE || c < 0 || c >= SIZE || grid[r][c] !== player) break;
+                    count++;
+                }
+                if (count >= 5) return true;
+            }
+            return false;
+        }
+
+        function updateStatus() {
+            statusEl.textContent = (currentPlayer === BLACK ? '黑方' : '白方') + ' 执子，点击落子';
+            undoBtn.disabled = history.length === 0;
+        }
+
+        restartBtn.addEventListener('click', initBoard);
+        undoBtn.addEventListener('click', undo);
+
+        initBoard();
+    </script>
+</body>
+</html>

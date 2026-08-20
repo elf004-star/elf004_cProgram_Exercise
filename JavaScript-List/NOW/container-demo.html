@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机用户 - 展示在页面上</title>
+    <style>
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        button {
+            padding: 10px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background: #4a90d9;
+            color: white;
+        }
+        button:hover {
+            background: #3a7ac0;
+        }
+        #userContainer img {
+            border-radius: 50%;
+            margin-top: 16px;
+        }
+        #userContainer p {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>随机用户</h1>
+    <button id="loadBtn">加载用户</button>
+    <div id="userContainer">
+        <p>点击按钮加载一位随机用户</p>
+    </div>
+
+    <script src="js-410-container.js"></script>
+</body>
+</html>

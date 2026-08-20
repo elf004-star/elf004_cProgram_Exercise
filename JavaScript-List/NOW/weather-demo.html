@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天气小应用</title>
+    <style>
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        button {
+            padding: 10px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background: #4a90d9;
+            color: white;
+        }
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        #statusText {
+            color: #666;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>天气小应用</h1>
+    <button id="getWeatherBtn">获取天气</button>
+    <p id="statusText">点击按钮获取成都的天气</p>
+    <div id="resultDiv"></div>
+
+    <script src="js-40-weather-app.js"></script>
+</body>
+</html>
