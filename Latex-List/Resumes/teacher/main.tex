@@ -2,7 +2,7 @@
 % Resume in Latex
 % Author : Jake Gutierrez (adapted for Chinese)
 % !TEX program = latexmk
-% !TEX options = "-xelatex -shell-escape -outdir=Build"
+% !TEX options = -xelatex -shell-escape -outdir=Build "%DOC%"
 %-------------------------
 
 \documentclass[letterpaper,11pt]{article}
@@ -10,11 +10,11 @@
 \PassOptionsToPackage{quiet}{xeCJK}
 \usepackage[UTF8]{ctex}
 
-% 字体设置：优先苹方，否则回退到 SongtiSCLight
+% 字体设置：优先苹方（macOS），否则回退到 Windows 中文字体（宋体正文 + 黑体加粗）
 \IfFontExistsTF{苹方-简}{%
     \setCJKmainfont{苹方-简}[BoldFont=苹方-简 中黑体, ItalicFont=苹方-简]%
 }{%
-    \setCJKmainfont{SongtiSCLight}%
+    \setCJKmainfont{宋体}[BoldFont=黑体]%
 }
 
 \usepackage{latexsym}
