@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue初体验</title>
+        <!-- 从CDN加载Vue -->
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+    <body>
+        <!-- Vue会管理这个div -->
+        <div id="app">
+            <h1>{{message}}</h1>
+            <input v-model="message" placeholder="修改我试试">
+            <p>你输入了：{{ message }}</p>
+        </div>
+
+        <script src="js-P3.js"></script>
+    </body>
+</html>
