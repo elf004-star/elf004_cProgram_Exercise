@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 从 CDN 引入 Vue 3 完整版（含模板编译器），才能直接用模板语法 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <!-- id="app" 是 Vue 应用挂载的"容器"；script 末尾的 app.mount('#app') 会接管这个区域 -->
+    <div id="app">
+        <!-- 页面标题，纯静态文本，与 Vue 无关 -->
+        <h2> 待办清单（Vue版）</h2>
+
+        <!--
+            v-model="newTodo"       ：双向绑定。输入框内容 <-> 数据 newTodo，打字即改数据、改数据即刷输入框
+            @keyup.enter="addTodo"  ：在输入框内按"回车键"时，调用 addTodo() 添加一条待办
+            placeholder             ：输入框为空时显示的灰色提示文字
+        -->
+        <input v-model="newTodo" @keyup.enter="addTodo" placeholder="输入待办">
+            <!-- @click="addTodo" ：点击"添加"按钮时，调用 addTodo() -->
+            <button @click="addTodo">添加</button>
+
+            <!-- <ul> 无序列表，里面用 v-for 循环生成 <li> -->
+            <ul>
+                <!--
+                    v-for="todo in todos" ：遍历 todos 数组，每一项渲染成一个 <li>，当前项命名为 todo
+                    :key="todo.id"        ：给每个 <li> 一个唯一标识，帮 Vue 精准更新，避免增删时出错
+                -->
+                <li v-for="todo in todos" :key="todo.id">
+                    <!--
+                        :style="..."  ：动态绑定样式（是 v-bind:style 的简写）
+                        textDecoration: todo.done ? 'line-through' : 'none'
+                        todo.done 为 true 时给文字加删除线(line-through)，否则正常显示(none)
+                        这就是"点 ✅ 后文字划线"的实现
+                    -->
+                    <span :style="{ textDecoration: todo.done ? 'line-through' : 'none' }">
+                        <!-- {{ todo.text }} ：插值语法，把 todo.text 的值输出到页面上 -->
+                        {{ todo.text }}
+                    </span>
+                    <!-- @click="toggleTodo(todo.id)" ：点击 ✅ 切换这条待办的完成状态（传它的 id） -->
+                    <button @click="toggleTodo(todo.id)">✅</button>
+                    <!-- @click="deleteTodo(todo.id)" ：点击 ❌ 删除这条待办（传它的 id） -->
+                    <button @click="deleteTodo(todo.id)">❌</button>
+                </li>
+            </ul>
+
+            <!-- {{ todos.length }} ：页面实时显示待办的总条数（列表长度） -->
+            <p>总计：{{ todos.length }} 项</p>
+    </div>
+    <!-- 引入 Vue 应用逻辑（createApp / data / methods / mount 都写在这个文件里） -->
+    <!-- 放在 body 末尾，确保此时 #app 已渲染、且上面已加载 vue.global.js -->
+    <script src="js-42-Vue.js"></script>
+</body>
+</html>
