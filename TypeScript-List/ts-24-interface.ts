@@ -6,7 +6,8 @@ interface User {
   readonly id: number;    // 只读属性
 }
 
-function createUser(user: User): User {
+// 入参不需要 id（由函数内部生成），用 Omit 去掉它
+function createUser(user: Omit<User, "id">): User {
   return {
     id: Date.now(),
     name: user.name,
